@@ -28,6 +28,27 @@ export default function AdminDashboard() {
     tarifa_base: 15000
   });
 
+  // Zonas predefinidas
+  const zonas = {
+    centro: { lat: -27.3671, lon: -55.8961, nombre: 'Centro' },
+    villa_sarita: { lat: -27.3848, lon: -55.8866, nombre: 'Villa Sarita' },
+    san_lorenzo: { lat: -27.3533, lon: -55.9180, nombre: 'San Lorenzo' },
+    miguel_lanús: { lat: -27.3927, lon: -55.9145, nombre: 'Miguel Lanús' },
+    villa_cabello: { lat: -27.3438, lon: -55.8742, nombre: 'Villa Cabello' },
+    itaembé_miní: { lat: -27.4172, lon: -55.9319, nombre: 'Itaembé Miní' },
+    villa_urquiza: { lat: -27.3281, lon: -55.9087, nombre: 'Villa Urquiza' },
+    el_brete: { lat: -27.4384, lon: -55.9548, nombre: 'El Brete' }
+  };
+
+  const handleZonaChange = (zona) => {
+    const ubicacion = zonas[zona];
+    setFormData({
+      ...formData,
+      latitud: ubicacion.lat,
+      longitud: ubicacion.lon
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
