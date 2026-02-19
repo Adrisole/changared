@@ -238,6 +238,23 @@ export default function AdminDashboard() {
                       </select>
                     </div>
                     <div className="space-y-2">
+                      <Label>Zona de Trabajo</Label>
+                      <select 
+                        onChange={(e) => handleZonaChange(e.target.value)} 
+                        className="w-full h-12 rounded-lg border border-slate-200 px-3 bg-slate-50"
+                      >
+                        <option value="">Seleccionar zona...</option>
+                        {Object.entries(zonas).map(([key, zona]) => (
+                          <option key={key} value={key}>
+                            {zona.nombre}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-xs text-slate-500">
+                        O ingresa coordenadas manualmente abajo
+                      </p>
+                    </div>
+                    <div className="space-y-2">
                       <Label>Latitud</Label>
                       <Input type="number" step="any" value={formData.latitud} onChange={(e) => setFormData({ ...formData, latitud: parseFloat(e.target.value) })} required data-testid="prof-latitud-input" />
                     </div>
@@ -246,8 +263,11 @@ export default function AdminDashboard() {
                       <Input type="number" step="any" value={formData.longitud} onChange={(e) => setFormData({ ...formData, longitud: parseFloat(e.target.value) })} required data-testid="prof-longitud-input" />
                     </div>
                     <div className="space-y-2">
-                      <Label>Tarifa Base</Label>
-                      <Input type="number" step="0.01" value={formData.tarifa_base} onChange={(e) => setFormData({ ...formData, tarifa_base: parseFloat(e.target.value) })} required data-testid="prof-tarifa-input" />
+                      <Label>Tarifa Base (ARS)</Label>
+                      <Input type="number" step="100" value={formData.tarifa_base} onChange={(e) => setFormData({ ...formData, tarifa_base: parseFloat(e.target.value) })} required data-testid="prof-tarifa-input" />
+                      <p className="text-xs text-slate-500">
+                        Recomendado: $15,000 - $20,000 por servicio
+                      </p>
                     </div>
                     <div className="space-y-2 flex items-center">
                       <input type="checkbox" checked={formData.disponible} onChange={(e) => setFormData({ ...formData, disponible: e.target.checked })} className="mr-2" data-testid="prof-disponible-checkbox" />
