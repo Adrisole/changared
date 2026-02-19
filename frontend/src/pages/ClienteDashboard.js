@@ -315,7 +315,8 @@ export default function ClienteDashboard() {
                             {getServiceIcon(solicitud.servicio)}
                           </div>
                           <div>
-                            <h3 className="font-heading font-bold text-lg capitalize">{solicitud.servicio}</h3>
+                            <h3 className="font-heading font-bold text-lg capitalize">{solicitud.servicio.replace('_', ' ')}</h3>
+                            <p className="text-xs text-slate-500">{formatCategoria(solicitud.categoria_trabajo || 'reparacion_simple')}</p>
                             <p className="text-sm text-slate-600">{new Date(solicitud.created_at).toLocaleString('es-AR')}</p>
                           </div>
                         </div>
