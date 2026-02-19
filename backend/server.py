@@ -99,6 +99,7 @@ class Solicitud(BaseModel):
     cliente_nombre: str
     mensaje_cliente: str
     servicio: str
+    categoria_trabajo: str = "reparacion_simple"
     profesional_id: str
     profesional_nombre: str
     latitud_cliente: float
