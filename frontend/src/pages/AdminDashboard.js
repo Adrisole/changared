@@ -239,6 +239,10 @@ export default function AdminDashboard() {
                         <option value="electricista">Electricista</option>
                         <option value="plomero">Plomero</option>
                         <option value="gasista">Gasista</option>
+                        <option value="tecnico_aire">Técnico Aire Acondicionado</option>
+                        <option value="tecnico_lavarropas">Técnico Lavarropas</option>
+                        <option value="tecnico_heladeras">Técnico Heladeras</option>
+                        <option value="tecnico_tv">Técnico TV</option>
                       </select>
                     </div>
                     <div className="space-y-2">
