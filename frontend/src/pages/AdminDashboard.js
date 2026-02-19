@@ -25,7 +25,7 @@ export default function AdminDashboard() {
     latitud: -27.365,
     longitud: -55.896,
     disponible: true,
-    tarifa_base: 5000
+    tarifa_base: 15000
   });
 
   useEffect(() => {
