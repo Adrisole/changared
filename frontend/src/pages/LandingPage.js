@@ -54,49 +54,81 @@ export default function LandingPage() {
           <h2 className="text-4xl font-heading font-bold text-center mb-4">Servicios Disponibles</h2>
           <p className="text-center text-slate-600 mb-12 text-lg">Profesionales verificados para emergencias y trabajos programados</p>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-6">
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary" data-testid="servicio-electricista-card">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Zap className="h-8 w-8 text-primary group-hover:text-white" />
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <Zap className="h-7 w-7 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-2xl font-heading font-bold mb-3">Electricista</h3>
-                <p className="text-slate-600 mb-4">Instalaciones, reparaciones y emergencias eléctricas. Servicio rápido y seguro.</p>
-                <ul className="space-y-2 text-sm text-slate-600">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Instalaciones</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Reparaciones</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Emergencias 24/7</li>
-                </ul>
+                <h3 className="text-xl font-heading font-bold mb-2">Electricista</h3>
+                <p className="text-sm text-slate-600 mb-3">Instalaciones, reparaciones y emergencias eléctricas.</p>
+                <p className="text-xs text-primary font-semibold">Desde $8,000</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary" data-testid="servicio-plomero-card">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Droplets className="h-8 w-8 text-primary group-hover:text-white" />
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <Droplets className="h-7 w-7 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-2xl font-heading font-bold mb-3">Plomero</h3>
-                <p className="text-slate-600 mb-4">Reparación de cañerías, fugas y sistemas sanitarios. Expertos en agua.</p>
-                <ul className="space-y-2 text-sm text-slate-600">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Fugas y goteras</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Cañerías</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Sistemas sanitarios</li>
-                </ul>
+                <h3 className="text-xl font-heading font-bold mb-2">Plomero</h3>
+                <p className="text-sm text-slate-600 mb-3">Reparación de cañerías, fugas y sistemas sanitarios.</p>
+                <p className="text-xs text-primary font-semibold">Desde $15,000</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary" data-testid="servicio-gasista-card">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Flame className="h-8 w-8 text-primary group-hover:text-white" />
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <Flame className="h-7 w-7 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-2xl font-heading font-bold mb-3">Gasista</h3>
-                <p className="text-slate-600 mb-4">Instalaciones y reparaciones de gas. Seguridad garantizada por profesionales.</p>
-                <ul className="space-y-2 text-sm text-slate-600">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Instalaciones</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Inspecciones</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-600" /> Reparaciones seguras</li>
-                </ul>
+                <h3 className="text-xl font-heading font-bold mb-2">Gasista</h3>
+                <p className="text-sm text-slate-600 mb-3">Instalaciones y reparaciones de gas matriculado.</p>
+                <p className="text-xs text-primary font-semibold">Desde $20,000</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <Wind className="h-7 w-7 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-xl font-heading font-bold mb-2">Técnico Aire</h3>
+                <p className="text-sm text-slate-600 mb-3">Service y reparación de aires acondicionados.</p>
+                <p className="text-xs text-primary font-semibold">Desde $15,000</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <WashingMachine className="h-7 w-7 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-xl font-heading font-bold mb-2">Técnico Lavarropas</h3>
+                <p className="text-sm text-slate-600 mb-3">Reparación y service de lavarropas.</p>
+                <p className="text-xs text-primary font-semibold">Desde $12,000</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <Refrigerator className="h-7 w-7 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-xl font-heading font-bold mb-2">Técnico Heladeras</h3>
+                <p className="text-sm text-slate-600 mb-3">Reparación de heladeras y freezers.</p>
+                <p className="text-xs text-primary font-semibold">Desde $15,000</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-6">
+                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
+                  <Tv className="h-7 w-7 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-xl font-heading font-bold mb-2">Técnico TV</h3>
+                <p className="text-sm text-slate-600 mb-3">Reparación de televisores y pantallas.</p>
+                <p className="text-xs text-primary font-semibold">Desde $8,000</p>
               </CardContent>
             </Card>
           </div>
