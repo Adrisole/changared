@@ -173,31 +173,71 @@ export default function ClienteDashboard() {
                     data-testid="mensaje-textarea"
                   />
                 </div>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="latitud">Latitud</Label>
-                    <Input
-                      id="latitud"
-                      type="number"
-                      step="any"
-                      value={formData.latitud}
-                      onChange={(e) => setFormData({ ...formData, latitud: parseFloat(e.target.value) })}
-                      required
-                      data-testid="latitud-input"
-                    />
+
+                {/* Selector de método de ubicación */}
+                <div className="space-y-2">
+                  <Label>¿Cómo quieres indicar tu ubicación?</Label>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant={ubicacionMode === 'zona' ? 'default' : 'outline'}
+                      onClick={() => setUbicacionMode('zona')}
+                      className="flex-1"
+                    >
+                      <MapPin className="h-4 w-4 mr-2" />
+                      Seleccionar Zona
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={ubicacionMode === 'auto' ? 'default' : 'outline'}
+                      onClick={() => {
+                        setUbicacionMode('auto');
+                        obtenerUbicacionAutomatica();
+                      }}
+                      className="flex-1"
+                    >
+                      <Zap className="h-4 w-4 mr-2" />
+                      Ubicación Automática
+                    </Button>
                   </div>
+                </div>
+
+                {/* Selector de zona */}
+                {ubicacionMode === 'zona' && (
                   <div className="space-y-2">
-                    <Label htmlFor="longitud">Longitud</Label>
-                    <Input
-                      id="longitud"
-                      type="number"
-                      step="any"
-                      value={formData.longitud}
-                      onChange={(e) => setFormData({ ...formData, longitud: parseFloat(e.target.value) })}
-                      required
-                      data-testid="longitud-input"
-                    />
+                    <Label htmlFor="zona">Selecciona tu zona en Posadas</Label>
+                    <select
+                      id="zona"
+                      value={formData.zona}
+                      onChange={(e) => handleZonaChange(e.target.value)}
+                      className="w-full h-12 rounded-lg border border-slate-200 px-3 bg-slate-50"
+                      data-testid="zona-select"
+                    >
+                      {Object.entries(zonas).map(([key, zona]) => (
+                        <option key={key} value={key}>
+                          {zona.nombre}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-sm text-slate-500">
+                      📍 {zonas[formData.zona].nombre} seleccionado
+                    </p>
                   </div>
+                )}
+
+                {/* Confirmación de ubicación automática */}
+                {ubicacionMode === 'auto' && (
+                  <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <p className="text-sm text-blue-800">
+                      ✓ Ubicación automática activada
+                    </p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      Coordenadas: {formData.latitud.toFixed(4)}, {formData.longitud.toFixed(4)}
+                    </p>
+                  </div>
+                )}
+
+                <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="urgencia">Urgencia</Label>
                     <select
@@ -207,11 +247,31 @@ export default function ClienteDashboard() {
                       className="w-full h-12 rounded-lg border border-slate-200 px-3 bg-slate-50"
                       data-testid="urgencia-select"
                     >
-                      <option value="normal">Normal</option>
-                      <option value="urgente">Urgente (+30%)</option>
+                      <option value="normal">Normal - Precio estándar</option>
+                      <option value="urgente">Urgente - +30% por urgencia</option>
                     </select>
                   </div>
+                  <div className="space-y-2">
+                    <Label>Precio Estimado</Label>
+                    <div className="h-12 rounded-lg border border-slate-200 px-3 bg-slate-50 flex items-center">
+                      <DollarSign className="h-5 w-5 text-primary mr-2" />
+                      <span className="text-lg font-bold text-primary">
+                        {formData.urgencia === 'urgente' ? '$19,500 - $26,000' : '$15,000 - $20,000'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
+
+                <div className="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                  <p className="text-sm text-amber-800 font-semibold mb-1">
+                    💡 Nota importante:
+                  </p>
+                  <p className="text-xs text-amber-700">
+                    El precio final dependerá del tipo de servicio y la distancia del profesional. 
+                    Te mostraremos el precio exacto antes de confirmar.
+                  </p>
+                </div>
+
                 <Button type="submit" disabled={loading} className="w-full" data-testid="submit-solicitud-button">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Solicitar Servicio
