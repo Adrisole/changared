@@ -166,6 +166,65 @@ def haversine(lon1, lat1, lon2, lat2):
     km = 6371 * c
     return round(km, 2)
 
+# Tabla de precios por servicio y categoría (en ARS)
+PRECIOS = {
+    "electricista": {
+        "visita": (8000, 15000),
+        "reparacion_simple": (15000, 28000),
+        "reparacion_media": (25000, 60000),
+        "instalacion": (40000, 180000)
+    },
+    "plomero": {
+        "visita": (15000, 22000),
+        "reparacion_simple": (18000, 45000),
+        "reparacion_media": (28000, 85000),
+        "instalacion": (25000, 110000)
+    },
+    "gasista": {
+        "visita": (20000, 40000),
+        "reparacion_simple": (20000, 55000),
+        "reparacion_media": (35000, 90000),
+        "instalacion": (45000, 180000)
+    },
+    "tecnico_lavarropas": {
+        "visita": (12000, 25000),
+        "reparacion_simple": (20000, 55000),
+        "reparacion_media": (40000, 160000),
+        "instalacion": (0, 0)
+    },
+    "tecnico_tv": {
+        "visita": (8000, 25000),
+        "reparacion_simple": (15000, 50000),
+        "reparacion_media": (50000, 180000),
+        "instalacion": (0, 0)
+    },
+    "tecnico_heladeras": {
+        "visita": (15000, 28000),
+        "reparacion_simple": (20000, 65000),
+        "reparacion_media": (30000, 120000),
+        "instalacion": (0, 0)
+    },
+    "tecnico_aire": {
+        "visita": (15000, 25000),
+        "reparacion_simple": (25000, 70000),
+        "reparacion_media": (45000, 130000),
+        "instalacion": (70000, 180000)
+    }
+}
+
+def calcular_precio_servicio(tipo_servicio: str, categoria: str, urgente: bool = False) -> tuple:
+    """Calcula precio según servicio, categoría y urgencia"""
+    precios = PRECIOS.get(tipo_servicio, {}).get(categoria, (15000, 25000))
+    min_precio, max_precio = precios
+    
+    if urgente:
+        min_precio = int(min_precio * 1.3)
+        max_precio = int(max_precio * 1.3)
+    
+    # Retornar precio promedio
+    precio_promedio = (min_precio + max_precio) / 2
+    return precio_promedio, min_precio, max_precio
+
 async def procesar_solicitud_con_ia(mensaje: str, lat: float, lon: float, urgencia: str, cliente_nombre: str):
     """Procesa solicitud usando IA y asigna profesional"""
     # Obtener todos los profesionales disponibles
