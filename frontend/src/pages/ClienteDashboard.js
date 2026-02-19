@@ -131,9 +131,23 @@ export default function ClienteDashboard() {
     const icons = {
       electricista: <Zap className="h-5 w-5" />,
       plomero: <Droplets className="h-5 w-5" />,
-      gasista: <Flame className="h-5 w-5" />
+      gasista: <Flame className="h-5 w-5" />,
+      tecnico_lavarropas: <User className="h-5 w-5" />,
+      tecnico_tv: <User className="h-5 w-5" />,
+      tecnico_heladeras: <User className="h-5 w-5" />,
+      tecnico_aire: <User className="h-5 w-5" />
     };
     return icons[servicio] || <User className="h-5 w-5" />;
+  };
+
+  const formatCategoria = (categoria) => {
+    const nombres = {
+      visita: 'Visita/Diagnóstico',
+      reparacion_simple: 'Reparación Simple',
+      reparacion_media: 'Reparación Media',
+      instalacion: 'Instalación'
+    };
+    return nombres[categoria] || categoria;
   };
 
   return (
