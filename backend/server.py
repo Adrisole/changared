@@ -506,6 +506,7 @@ async def create_solicitud(solicitud_data: SolicitudCreate, current_user: User =
         cliente_nombre=current_user.nombre,
         mensaje_cliente=solicitud_data.mensaje_cliente,
         servicio=resultado_ia['servicio'],
+        categoria_trabajo=resultado_ia.get('categoria_trabajo', 'reparacion_simple'),
         profesional_id=profesional['id'],
         profesional_nombre=profesional['nombre'],
         latitud_cliente=solicitud_data.latitud,
