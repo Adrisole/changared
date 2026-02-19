@@ -136,7 +136,11 @@ export default function AdminDashboard() {
     const icons = {
       electricista: <Zap className="h-5 w-5" />,
       plomero: <Droplets className="h-5 w-5" />,
-      gasista: <Flame className="h-5 w-5" />
+      gasista: <Flame className="h-5 w-5" />,
+      tecnico_lavarropas: <Users className="h-5 w-5" />,
+      tecnico_tv: <Tv className="h-5 w-5" />,
+      tecnico_heladeras: <Users className="h-5 w-5" />,
+      tecnico_aire: <Users className="h-5 w-5" />
     };
     return icons[tipo];
   };
