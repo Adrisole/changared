@@ -239,7 +239,7 @@ async def procesar_solicitud_con_ia(mensaje: str, lat: float, lon: float, urgenc
     
     # Crear contexto para IA
     profesionales_info = "\n".join([
-        f"{i+1}. {p['tipo_servicio'].capitalize()} {p['id'][:8]}, a {p['distancia']} km, tarifa base ${p['tarifa_base']}"
+        f"{i+1}. {p['tipo_servicio'].replace('_', ' ').capitalize()} {p['id'][:8]}, a {p['distancia']} km"
         for i, p in enumerate(profesionales)
     ])
     
@@ -251,24 +251,50 @@ La urgencia del servicio es '{urgencia}' (normal o urgente).
 Dispones de los siguientes profesionales:
 {profesionales_info}
 
+SERVICIOS DISPONIBLES:
+- electricista: problemas eléctricos, cortes de luz, instalaciones eléctricas
+- plomero: cañerías, pérdidas de agua, destapaciones, grifería
+- gasista: calefones, gas, habilitaciones, instalaciones de gas
+- tecnico_lavarropas: reparación y service de lavarropas
+- tecnico_tv: reparación de televisores, pantallas
+- tecnico_heladeras: reparación de heladeras, freezers
+- tecnico_aire: service y reparación de aires acondicionados
+
+CATEGORÍAS DE TRABAJO:
+- visita: solo revisión, diagnóstico, sin reparación confirmada
+- reparacion_simple: trabajos de 30-60 min (cambios simples, ajustes)
+- reparacion_media: trabajos de 1-2 horas (reparaciones complejas)
+- instalacion: instalaciones nuevas o completas
+
+RANGOS DE PRECIOS POR CATEGORÍA (en ARS):
+Electricista: Visita 8k-15k | Simple 15k-28k | Media 25k-60k | Instalación 40k-180k
+Plomero: Visita 15k-22k | Simple 18k-45k | Media 28k-85k | Instalación 25k-110k
+Gasista: Visita 20k-40k | Simple 20k-55k | Media 35k-90k | Instalación 45k-180k
+Técnico Lavarropas: Visita 12k-25k | Simple 20k-55k | Media 40k-160k
+Técnico TV: Visita 8k-25k | Simple 15k-50k | Media 50k-180k
+Técnico Heladeras: Visita 15k-28k | Simple 20k-65k | Media 30k-120k
+Técnico Aire: Visita 15k-25k | Simple 25k-70k | Media 45k-130k | Instalación 70k-180k
+
 Tareas:
-1. Determinar el tipo de servicio requerido (electricista, plomero, o gasista).
-2. Seleccionar el profesional más cercano disponible del tipo requerido.
-3. Estimar precio base según la tarifa del profesional y aplicar +30% si es urgente.
-4. Calcular comisión de ChangaRed (20% del precio final).
-5. Calcular pago al profesional (80% del precio final).
-6. Generar mensaje profesional listo para enviar al cliente, incluyendo servicio, precio y confirmación.
-7. Crear resumen para administración.
+1. Determinar el tipo de servicio requerido (uno de los listados arriba).
+2. Determinar la categoría de trabajo según la descripción.
+3. Seleccionar el profesional más cercano disponible del tipo requerido.
+4. Calcular precio según categoría y aplicar +30% si es urgente.
+5. Calcular comisión de ChangaRed (20% del precio final).
+6. Calcular pago al profesional (80% del precio final).
+7. Generar mensaje profesional para el cliente incluyendo tipo de trabajo y rango de precio.
 
 Devuelve SOLO JSON válido con este formato exacto:
 {{
   "servicio": "tipo de servicio detectado",
+  "categoria_trabajo": "categoria detectada",
   "profesional_id": "ID del profesional",
-  "precio_base": 0,
+  "precio_minimo": 0,
+  "precio_maximo": 0,
   "precio_total": 0,
   "comision_changared": 0,
   "pago_profesional": 0,
-  "mensaje_cliente": "mensaje amigable para el cliente",
+  "mensaje_cliente": "mensaje amigable explicando servicio y precio",
   "resumen_admin": "resumen breve"
 }}
 """
@@ -304,34 +330,58 @@ Devuelve SOLO JSON válido con este formato exacto:
         
         if not profesional_asignado:
             # Asignar el más cercano del tipo detectado
-            tipo = resultado['servicio'].lower()
+            tipo = resultado['servicio'].lower().replace(" ", "_")
             candidatos = [p for p in profesionales if tipo in p['tipo_servicio']]
             if candidatos:
                 profesional_asignado = min(candidatos, key=lambda x: x['distancia'])
             else:
                 profesional_asignado = profesionales[0]
         
+        # Recalcular precio con nuestra tabla
+        categoria = resultado.get('categoria_trabajo', 'reparacion_simple')
+        precio_promedio, precio_min, precio_max = calcular_precio_servicio(
+            profesional_asignado['tipo_servicio'],
+            categoria,
+            urgencia == "urgente"
+        )
+        
+        comision = precio_promedio * 0.2
+        pago = precio_promedio * 0.8
+        
         resultado['profesional'] = profesional_asignado
+        resultado['precio_total'] = precio_promedio
+        resultado['precio_minimo'] = precio_min
+        resultado['precio_maximo'] = precio_max
+        resultado['comision_changared'] = comision
+        resultado['pago_profesional'] = pago
+        resultado['categoria_trabajo'] = categoria
+        resultado['servicio'] = profesional_asignado['tipo_servicio']
+        
         return resultado
         
     except Exception as e:
         logging.error(f"Error en IA: {str(e)}")
         # Fallback: asignar el profesional más cercano
         prof_cercano = min(profesionales, key=lambda x: x['distancia'])
-        precio_base = prof_cercano['tarifa_base']
-        precio_total = precio_base * 1.3 if urgencia == "urgente" else precio_base
-        comision = precio_total * 0.2
-        pago = precio_total * 0.8
+        precio_promedio, precio_min, precio_max = calcular_precio_servicio(
+            prof_cercano['tipo_servicio'],
+            'reparacion_simple',
+            urgencia == "urgente"
+        )
+        comision = precio_promedio * 0.2
+        pago = precio_promedio * 0.8
         
         return {
             "servicio": prof_cercano['tipo_servicio'],
+            "categoria_trabajo": "reparacion_simple",
             "profesional_id": prof_cercano['id'],
             "profesional": prof_cercano,
-            "precio_base": precio_base,
-            "precio_total": precio_total,
+            "precio_minimo": precio_min,
+            "precio_maximo": precio_max,
+            "precio_total": precio_promedio,
             "comision_changared": comision,
             "pago_profesional": pago,
-            "mensaje_cliente": f"Hola {cliente_nombre}, hemos asignado un {prof_cercano['tipo_servicio']} para tu solicitud. Precio: ${precio_total:.2f}. ¡Llegará pronto!",
+            "mensaje_cliente": f"Hola {cliente_nombre}, hemos asignado un {prof_cercano['tipo_servicio'].replace('_', ' ')} para tu solicitud. Precio estimado: ${precio_min:,.0f} - ${precio_max:,.0f}. ¡Llegará pronto!",
             "resumen_admin": f"Solicitud procesada automáticamente (fallback)"
         }
 
