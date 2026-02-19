@@ -1,0 +1,172 @@
+{
+  "brand_identity": {
+    "name": "ChangaRed",
+    "archetype": "The Performance Pro",
+    "emotional_tone": "Reliable, Urgent, Professional, Secure",
+    "theme_mode": "light",
+    "primary_color_hex": "#0056D2",
+    "secondary_color_hex": "#64748B"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Manrope, sans-serif",
+      "body": "Public Sans, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "installation_command": "yarn add @fontsource/manrope @fontsource/public-sans",
+    "usage_rules": {
+      "headings": "font-heading font-bold tracking-tight text-slate-900",
+      "subheadings": "font-heading font-semibold text-slate-700",
+      "body": "font-body text-slate-600 leading-relaxed",
+      "captions": "font-body text-xs text-slate-500 uppercase tracking-wider"
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "DEFAULT": "#0056D2",
+        "foreground": "#FFFFFF",
+        "hover": "#0044A6"
+      },
+      "secondary": {
+        "DEFAULT": "#F1F5F9",
+        "foreground": "#0F172A"
+      },
+      "destructive": {
+        "DEFAULT": "#EF4444",
+        "foreground": "#FFFFFF"
+      },
+      "accent": {
+        "DEFAULT": "#E0F2FE",
+        "foreground": "#0056D2"
+      },
+      "background": "#FFFFFF",
+      "foreground": "#0F172A",
+      "muted": "#F8FAFC",
+      "border": "#E2E8F0"
+    },
+    "css_variables": {
+      "root": {
+        "--background": "0 0% 100%",
+        "--foreground": "222.2 84% 4.9%",
+        "--card": "0 0% 100%",
+        "--card-foreground": "222.2 84% 4.9%",
+        "--popover": "0 0% 100%",
+        "--popover-foreground": "222.2 84% 4.9%",
+        "--primary": "217 100% 41%",
+        "--primary-foreground": "210 40% 98%",
+        "--secondary": "210 40% 96.1%",
+        "--secondary-foreground": "222.2 47.4% 11.2%",
+        "--muted": "210 40% 96.1%",
+        "--muted-foreground": "215.4 16.3% 46.9%",
+        "--accent": "210 40% 96.1%",
+        "--accent-foreground": "222.2 47.4% 11.2%",
+        "--destructive": "0 84.2% 60.2%",
+        "--destructive-foreground": "210 40% 98%",
+        "--border": "214.3 31.8% 91.4%",
+        "--input": "214.3 31.8% 91.4%",
+        "--ring": "217 100% 41%",
+        "--radius": "0.5rem"
+      }
+    }
+  },
+  "layout": {
+    "spacing_scale": {
+      "section_padding": "py-20 md:py-32",
+      "container_padding": "px-6 md:px-12",
+      "card_padding": "p-6 md:p-8",
+      "element_gap": "gap-6"
+    },
+    "container_width": "max-w-7xl mx-auto",
+    "grid_systems": {
+      "marketing": "grid grid-cols-1 md:grid-cols-12 gap-8",
+      "dashboard": "grid grid-cols-1 md:grid-cols-4 gap-6",
+      "form": "grid grid-cols-1 gap-6"
+    }
+  },
+  "components": {
+    "buttons": {
+      "default": "rounded-lg font-semibold shadow-sm transition-all active:scale-95",
+      "primary": "bg-primary text-primary-foreground hover:bg-blue-700 shadow-blue-200/50",
+      "outline": "border-2 border-slate-200 hover:border-primary hover:text-primary bg-transparent"
+    },
+    "cards": {
+      "style": "bg-white rounded-xl border border-slate-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_30px_-4px_rgba(0,0,0,0.1)] transition-shadow duration-300",
+      "dashboard_metric": "p-6 flex flex-col justify-between h-full border-l-4 border-l-primary"
+    },
+    "inputs": {
+      "style": "h-12 rounded-lg border-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-slate-50"
+    },
+    "badges": {
+      "urgent": "bg-red-100 text-red-700 border-red-200",
+      "normal": "bg-blue-50 text-blue-700 border-blue-100",
+      "completed": "bg-green-50 text-green-700 border-green-100"
+    }
+  },
+  "images": {
+    "hero_bg": {
+      "url": "https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg",
+      "alt": "Professional electrician working on panel",
+      "usage": "Landing page hero background with overlay"
+    },
+    "service_electrician": {
+      "url": "https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg",
+      "alt": "Electrician service",
+      "usage": "Service selection card"
+    },
+    "service_plumber": {
+      "url": "https://images.pexels.com/photos/8486978/pexels-photo-8486978.jpeg",
+      "alt": "Plumber service",
+      "usage": "Service selection card"
+    },
+    "service_gas": {
+      "url": "https://images.pexels.com/photos/5463580/pexels-photo-5463580.jpeg",
+      "alt": "Gas technician service",
+      "usage": "Service selection card"
+    },
+    "trust_family": {
+      "url": "https://images.pexels.com/photos/4609051/pexels-photo-4609051.jpeg",
+      "alt": "Happy family in safe home",
+      "usage": "Testimonials or Trust section"
+    },
+    "trust_handshake": {
+      "url": "https://images.pexels.com/photos/6170758/pexels-photo-6170758.jpeg",
+      "alt": "Professional handshake",
+      "usage": "About us or Partner section"
+    },
+    "logo_url": "https://customer-assets.emergentagent.com/job_1ccdb137-8865-4cb4-b134-9dea2c01f7a6/artifacts/klhc20tm_ChangaRed_Logo_IG_320x320%20-%20Editado.png"
+  },
+  "icons": {
+    "library": "lucide-react",
+    "mapping": {
+      "electrician": "Zap",
+      "plumber": "Droplets",
+      "gas": "Flame",
+      "urgent": "Siren",
+      "location": "MapPin",
+      "money": "Banknote",
+      "user": "User",
+      "calendar": "Calendar"
+    }
+  },
+  "universal_guidelines": [
+    "DO NOT use gradients for text or backgrounds unless specifically for a 'glass' effect overlay.",
+    "Use 'Manrope' for all headings to give a technical yet friendly feel.",
+    "Use 'Public Sans' for body text for maximum legibility.",
+    "Primary Blue (#0056D2) is for CTAs and active states only. Do not overuse it.",
+    "Urgency is communicated via Red (#EF4444) badges and icons, not by making the whole screen red.",
+    "Forms must be spacious. Use 'h-12' for inputs and buttons.",
+    "Dashboard cards should be white with subtle borders, not grey backgrounds.",
+    "Always use 'lucide-react' for icons.",
+    "Ensure all interactive elements have 'data-testid' attributes.",
+    "Mobile-first: Always design for single column first, then expand to grid on md/lg screens."
+  ],
+  "instructions_to_main_agent": {
+    "step_1": "Install fonts: yarn add @fontsource/manrope @fontsource/public-sans",
+    "step_2": "Update tailwind.config.js to include the new font families.",
+    "step_3": "Update index.css with the provided CSS variables for the 'Professional Blue' theme.",
+    "step_4": "Clean up App.css to remove default React styles.",
+    "step_5": "When building the Dashboard, use the 'Sidebar Layout' pattern with a fixed sidebar and scrollable content area.",
+    "step_6": "For the Landing Page, use the 'Hero Overlay' pattern with the electrician image and a strong value proposition."
+  }
+}
