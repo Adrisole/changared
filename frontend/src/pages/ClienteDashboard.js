@@ -41,6 +41,40 @@ export default function ClienteDashboard() {
     fetchSolicitudes();
   }, []);
 
+  const obtenerUbicacionAutomatica = () => {
+    if (navigator.geolocation) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setFormData({
+            ...formData,
+            latitud: position.coords.latitude,
+            longitud: position.coords.longitude
+          });
+          setLoading(false);
+          toast.success('Ubicación obtenida correctamente');
+        },
+        (error) => {
+          setLoading(false);
+          toast.error('No se pudo obtener tu ubicación. Selecciona una zona.');
+          console.error('Error de geolocalización:', error);
+        }
+      );
+    } else {
+      toast.error('Tu navegador no soporta geolocalización. Selecciona una zona.');
+    }
+  };
+
+  const handleZonaChange = (zona) => {
+    const ubicacion = zonas[zona];
+    setFormData({
+      ...formData,
+      zona: zona,
+      latitud: ubicacion.lat,
+      longitud: ubicacion.lon
+    });
+  };
+
   const fetchSolicitudes = async () => {
     try {
       const response = await axios.get(`${API}/solicitudes`, {
