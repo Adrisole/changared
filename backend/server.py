@@ -69,7 +69,7 @@ class ProfesionalCreate(BaseModel):
     latitud: float
     longitud: float
     disponible: bool = True
-    tarifa_base: float = 5000.0
+    tarifa_base: float = 15000.0
 
 class Profesional(BaseModel):
     model_config = ConfigDict(extra="ignore")
