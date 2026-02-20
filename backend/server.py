@@ -868,6 +868,56 @@ async def get_admin_metrics(current_user: User = Depends(get_current_user)):
         profesionales_activos=len(profesionales)
     )
 
+@api_router.post("/admin/solicitudes/{solicitud_id}/asignar-profesional")
+async def asignar_profesional_manual(
+    solicitud_id: str, 
+    profesional_id: str,
+    current_user: User = Depends(get_current_user)
+):
+    """Admin asigna manualmente un profesional a la solicitud"""
+    if current_user.rol != "admin":
+        raise HTTPException(status_code=403, detail="No autorizado")
+    
+    # Buscar solicitud
+    solicitud = await db.solicitudes.find_one({"id": solicitud_id}, {"_id": 0})
+    if not solicitud:
+        raise HTTPException(status_code=404, detail="Solicitud no encontrada")
+    
+    # Buscar profesional
+    profesional = await db.profesionales.find_one({"id": profesional_id}, {"_id": 0})
+    if not profesional:
+        raise HTTPException(status_code=404, detail="Profesional no encontrado")
+    
+    # Calcular distancia
+    distancia = haversine(
+        solicitud['longitud_cliente'],
+        solicitud['latitud_cliente'],
+        profesional['longitud'],
+        profesional['latitud']
+    )
+    
+    # Asignar profesional
+    await db.solicitudes.update_one(
+        {"id": solicitud_id},
+        {
+            "$set": {
+                "profesional_id": profesional['id'],
+                "profesional_nombre": profesional['nombre'],
+                "distancia_km": distancia,
+                "estado": "pendiente_confirmacion",
+                "asignado_manualmente_por": current_user.nombre,
+                "asignado_at": datetime.now(timezone.utc).isoformat()
+            }
+        }
+    )
+    
+    return {
+        "message": f"Profesional {profesional['nombre']} asignado correctamente",
+        "solicitud_id": solicitud_id,
+        "profesional_id": profesional_id,
+        "estado": "pendiente_confirmacion"
+    }
+
 # Test endpoint
 @api_router.get("/")
 async def root():
