@@ -332,6 +332,21 @@ export default function ClienteDashboard() {
                             {solicitud.urgencia === 'urgente' ? <Clock className="h-3 w-3 mr-1" /> : null}
                             {solicitud.urgencia}
                           </Badge>
+                          {solicitud.estado === 'pendiente_confirmacion' && (
+                            <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-300">
+                              ⏳ Esperando confirmación del profesional
+                            </Badge>
+                          )}
+                          {solicitud.estado === 'confirmado' && (
+                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-300">
+                              ✓ Confirmado por profesional
+                            </Badge>
+                          )}
+                          {solicitud.estado === 'sin_profesionales_disponibles' && (
+                            <Badge variant="destructive">
+                              ⚠️ No hay profesionales disponibles
+                            </Badge>
+                          )}
                           <Badge variant="outline" data-testid="estado-badge">{solicitud.estado}</Badge>
                         </div>
                       </div>
