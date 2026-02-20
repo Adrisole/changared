@@ -341,6 +341,36 @@ def calcular_precio_servicio(tipo_servicio: str, categoria: str, urgente: bool =
     precio_promedio = (min_precio + max_precio) / 2
     return precio_promedio, min_precio, max_precio
 
+def detectar_servicio_por_palabras(mensaje: str) -> str:
+    """Detecta el servicio por palabras clave como fallback"""
+    mensaje_lower = mensaje.lower()
+    
+    # Mapeo de palabras clave a servicios
+    keywords = {
+        "limpieza": ["limpieza", "limpiar", "alfombra", "tapizado", "mucama", "empleada doméstica", "barrer", "trapear"],
+        "electricista": ["luz", "electricidad", "enchufe", "cable", "térmica", "tablero", "cortocircuito"],
+        "plomero": ["agua", "caño", "cañería", "pérdida", "fuga", "inodoro", "canilla", "grifo", "baño", "ducha"],
+        "gasista": ["gas", "garrafa", "calefón a gas", "estufa", "cocina a gas"],
+        "tecnico_lavarropas": ["lavarropas", "lavadora", "secarropas", "centrifugado"],
+        "tecnico_tv": ["televisor", "tv", "pantalla", "smart tv", "led"],
+        "tecnico_heladeras": ["heladera", "freezer", "refrigerador", "no enfría"],
+        "tecnico_aire": ["aire acondicionado", "split", "climatización"],
+        "fletes": ["flete", "mudanza", "transporte", "traslado", "muebles"],
+        "albanil": ["pared", "revoque", "yeso", "durlock", "cerámica", "grieta", "humedad"],
+        "jardinero_poda": ["jardín", "pasto", "podar", "árboles", "plantas", "césped"],
+        "pintor": ["pintar", "pintura", "latex", "esmalte"],
+        "ninero_cuidador": ["niñero", "niñera", "cuidador", "bebé", "adulto mayor"],
+        "tapiceria": ["tapizado", "sillón", "sofá", "retapizar"],
+        "herreria": ["reja", "portón", "hierro", "soldadura", "parrilla"]
+    }
+    
+    for servicio, palabras in keywords.items():
+        for palabra in palabras:
+            if palabra in mensaje_lower:
+                return servicio
+    
+    return "electricista"  # Default
+
 async def procesar_solicitud_con_ia(mensaje: str, lat: float, lon: float, urgencia: str, cliente_nombre: str):
     """Procesa solicitud usando IA y asigna profesional"""
     # Obtener todos los profesionales disponibles
