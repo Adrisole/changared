@@ -174,6 +174,57 @@ def haversine(lon1, lat1, lon2, lat2):
     km = 6371 * c
     return round(km, 2)
 
+async def enviar_notificacion_telegram(solicitud: dict):
+    """Envía notificación de nueva solicitud al admin por Telegram"""
+    token = os.environ.get('TELEGRAM_BOT_TOKEN')
+    chat_id = os.environ.get('TELEGRAM_ADMIN_CHAT_ID')
+    
+    if not token or not chat_id:
+        logging.warning("Telegram no configurado")
+        return
+    
+    try:
+        # Formatear mensaje
+        mensaje = f"""🔔 **NUEVA SOLICITUD ChangaRed**
+
+👤 **Cliente:** {solicitud['cliente_nombre']}
+🔧 **Servicio:** {solicitud['servicio'].replace('_', ' ').title()}
+📋 **Categoría:** {solicitud['categoria_trabajo'].replace('_', ' ').title()}
+
+💬 **Descripción:**
+_{solicitud['mensaje_cliente']}_
+
+👷 **Profesional asignado:** {solicitud['profesional_nombre']}
+📍 **Distancia:** {solicitud['distancia_km']} km
+⚠️ **Urgencia:** {solicitud['urgencia'].upper()}
+
+💰 **Precio total:** ${solicitud['precio_total']:,.0f}
+💵 **Tu comisión:** ${solicitud['comision_changared']:,.0f}
+💸 **Pago profesional:** ${solicitud['pago_profesional']:,.0f}
+
+🔗 **Ver en admin:** {os.environ.get('FRONTEND_URL')}/admin
+
+⏰ {datetime.now(timezone.utc).strftime('%d/%m/%Y %H:%M')} hs
+"""
+        
+        # Enviar mensaje
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        data = {
+            "chat_id": chat_id,
+            "text": mensaje,
+            "parse_mode": "Markdown"
+        }
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=data, timeout=10.0)
+            if response.status_code == 200:
+                logging.info(f"Notificación Telegram enviada para solicitud {solicitud['id']}")
+            else:
+                logging.error(f"Error enviando Telegram: {response.text}")
+                
+    except Exception as e:
+        logging.error(f"Error en notificación Telegram: {str(e)}")
+
 # Tabla de precios por servicio y categoría (en ARS)
 PRECIOS = {
     "electricista": {
