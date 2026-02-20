@@ -16,6 +16,7 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 import asyncio
 from math import radians, cos, sin, asin, sqrt
+import httpx
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
