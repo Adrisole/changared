@@ -599,7 +599,7 @@ async def delete_profesional(prof_id: str, current_user: User = Depends(get_curr
 # Solicitudes endpoints
 @api_router.post("/solicitudes", response_model=Solicitud)
 async def create_solicitud(solicitud_data: SolicitudCreate, current_user: User = Depends(get_current_user)):
-    # Procesar con IA
+    # Procesar con IA para detectar tipo de servicio y calcular precio
     resultado_ia = await procesar_solicitud_con_ia(
         solicitud_data.mensaje_cliente,
         solicitud_data.latitud,
@@ -616,14 +616,15 @@ async def create_solicitud(solicitud_data: SolicitudCreate, current_user: User =
         profesional['latitud']
     )
     
+    # Crear solicitud SIN asignar profesional aún (solo como sugerencia)
     solicitud = Solicitud(
         cliente_id=current_user.id,
         cliente_nombre=current_user.nombre,
         mensaje_cliente=solicitud_data.mensaje_cliente,
         servicio=resultado_ia['servicio'],
         categoria_trabajo=resultado_ia.get('categoria_trabajo', 'reparacion_simple'),
-        profesional_id=profesional['id'],
-        profesional_nombre=profesional['nombre'],
+        profesional_id="",  # Sin asignar aún
+        profesional_nombre="Pendiente asignación",
         latitud_cliente=solicitud_data.latitud,
         longitud_cliente=solicitud_data.longitud,
         distancia_km=distancia,
@@ -631,27 +632,40 @@ async def create_solicitud(solicitud_data: SolicitudCreate, current_user: User =
         comision_changared=float(resultado_ia['comision_changared']),
         pago_profesional=float(resultado_ia['pago_profesional']),
         urgencia=solicitud_data.urgencia,
+        estado="pendiente_asignacion_admin",
         mensaje_respuesta=resultado_ia['mensaje_cliente']
     )
     
     doc = solicitud.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     
+    # Guardar profesional sugerido en metadata
+    doc['profesional_sugerido_id'] = profesional['id']
+    doc['profesional_sugerido_nombre'] = profesional['nombre']
+    
     await db.solicitudes.insert_one(doc)
     
-    # Actualizar estadísticas del profesional
-    await db.profesionales.update_one(
-        {"id": profesional['id']},
-        {
-            "$inc": {
-                "total_servicios": 1,
-                "total_ganado": solicitud.pago_profesional
-            }
-        }
-    )
-    
-    # Enviar notificación por Telegram al admin
+    # Enviar notificación por Telegram al admin CON LISTA DE PROFESIONALES
     try:
+        # Obtener profesionales disponibles del mismo tipo
+        profesionales_disponibles = await db.profesionales.find({
+            "tipo_servicio": resultado_ia['servicio'],
+            "disponible": True
+        }, {"_id": 0}).to_list(10)
+        
+        # Calcular distancias
+        for prof in profesionales_disponibles:
+            prof['distancia'] = haversine(
+                solicitud_data.longitud,
+                solicitud_data.latitud,
+                prof['longitud'],
+                prof['latitud']
+            )
+        
+        # Ordenar por distancia
+        profesionales_disponibles.sort(key=lambda x: x['distancia'])
+        
+        doc['profesionales_disponibles'] = profesionales_disponibles[:5]  # Top 5
         await enviar_notificacion_telegram(doc)
     except Exception as e:
         logging.error(f"Error enviando notificación: {str(e)}")
