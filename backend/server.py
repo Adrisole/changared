@@ -643,6 +643,128 @@ async def update_solicitud_estado(solicitud_id: str, estado: str, current_user: 
     
     return {"message": "Estado actualizado"}
 
+# Endpoints para profesionales
+@api_router.post("/solicitudes/{solicitud_id}/aceptar")
+async def aceptar_solicitud(solicitud_id: str, current_user: User = Depends(get_current_user)):
+    """Profesional acepta la solicitud asignada"""
+    # Buscar solicitud
+    solicitud = await db.solicitudes.find_one({"id": solicitud_id}, {"_id": 0})
+    if not solicitud:
+        raise HTTPException(status_code=404, detail="Solicitud no encontrada")
+    
+    # Verificar que es el profesional asignado
+    profesional = await db.profesionales.find_one({"email": current_user.email}, {"_id": 0})
+    if not profesional or profesional['id'] != solicitud['profesional_id']:
+        raise HTTPException(status_code=403, detail="No eres el profesional asignado")
+    
+    # Verificar estado
+    if solicitud['estado'] != 'pendiente_confirmacion':
+        raise HTTPException(status_code=400, detail="Esta solicitud ya fue procesada")
+    
+    # Actualizar a confirmado
+    await db.solicitudes.update_one(
+        {"id": solicitud_id},
+        {
+            "$set": {
+                "estado": "confirmado",
+                "confirmado_at": datetime.now(timezone.utc).isoformat()
+            }
+        }
+    )
+    
+    return {
+        "message": "Solicitud aceptada",
+        "solicitud_id": solicitud_id,
+        "cliente_nombre": solicitud['cliente_nombre']
+    }
+
+@api_router.post("/solicitudes/{solicitud_id}/rechazar")
+async def rechazar_solicitud(solicitud_id: str, motivo: str = "", current_user: User = Depends(get_current_user)):
+    """Profesional rechaza la solicitud - sistema busca otro"""
+    # Buscar solicitud
+    solicitud = await db.solicitudes.find_one({"id": solicitud_id}, {"_id": 0})
+    if not solicitud:
+        raise HTTPException(status_code=404, detail="Solicitud no encontrada")
+    
+    # Verificar que es el profesional asignado
+    profesional = await db.profesionales.find_one({"email": current_user.email}, {"_id": 0})
+    if not profesional or profesional['id'] != solicitud['profesional_id']:
+        raise HTTPException(status_code=403, detail="No eres el profesional asignado")
+    
+    # Verificar estado
+    if solicitud['estado'] != 'pendiente_confirmacion':
+        raise HTTPException(status_code=400, detail="Esta solicitud ya fue procesada")
+    
+    # Marcar como rechazado por este profesional
+    await db.solicitudes.update_one(
+        {"id": solicitud_id},
+        {
+            "$set": {
+                "rechazado_at": datetime.now(timezone.utc).isoformat()
+            },
+            "$push": {
+                "profesionales_rechazados": {
+                    "profesional_id": profesional['id'],
+                    "profesional_nombre": profesional['nombre'],
+                    "motivo": motivo,
+                    "rechazado_at": datetime.now(timezone.utc).isoformat()
+                }
+            }
+        }
+    )
+    
+    # Buscar siguiente profesional disponible
+    profesionales_rechazados = solicitud.get('profesionales_rechazados', [])
+    ids_rechazados = [p['profesional_id'] for p in profesionales_rechazados] + [profesional['id']]
+    
+    # Obtener profesionales del mismo tipo, disponibles y no rechazados
+    profesionales_disponibles = await db.profesionales.find({
+        "tipo_servicio": solicitud['servicio'],
+        "disponible": True,
+        "id": {"$nin": ids_rechazados}
+    }, {"_id": 0}).to_list(100)
+    
+    if not profesionales_disponibles:
+        # No hay más profesionales disponibles
+        await db.solicitudes.update_one(
+            {"id": solicitud_id},
+            {"$set": {"estado": "sin_profesionales_disponibles"}}
+        )
+        return {
+            "message": "Solicitud rechazada. No hay más profesionales disponibles.",
+            "reasignado": False
+        }
+    
+    # Calcular distancias y asignar al más cercano
+    for prof in profesionales_disponibles:
+        prof['distancia'] = haversine(
+            solicitud['longitud_cliente'],
+            solicitud['latitud_cliente'],
+            prof['longitud'],
+            prof['latitud']
+        )
+    
+    nuevo_profesional = min(profesionales_disponibles, key=lambda x: x['distancia'])
+    
+    # Reasignar solicitud
+    await db.solicitudes.update_one(
+        {"id": solicitud_id},
+        {
+            "$set": {
+                "profesional_id": nuevo_profesional['id'],
+                "profesional_nombre": nuevo_profesional['nombre'],
+                "distancia_km": nuevo_profesional['distancia'],
+                "estado": "pendiente_confirmacion"
+            }
+        }
+    )
+    
+    return {
+        "message": "Solicitud rechazada y reasignada",
+        "reasignado": True,
+        "nuevo_profesional": nuevo_profesional['nombre']
+    }
+
 # Admin endpoints
 @api_router.get("/admin/metrics", response_model=AdminMetrics)
 async def get_admin_metrics(current_user: User = Depends(get_current_user)):
