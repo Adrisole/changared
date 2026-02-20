@@ -1,19 +1,20 @@
-# Updated commission calculations to 10%.
+# Original Code for backend/server.py
+# Updated commission calculations
 
-# Line 407: "10% del precio final"
-# Line 408: "90%"
+# Calculates commission based on sales
+# 10% Commission
+COMMISSION_RATE_1 = 0.1
+# 90% Commission
+COMMISSION_RATE_2 = 0.9
 
-# ... existing code above ...
+# Function to calculate commission
 
-# Line 472
-comision = precio_promedio * 0.1
-pago = precio_promedio * 0.9
+def calculate_commission(sale_amount):
+    return sale_amount * COMMISSION_RATE_1
 
-# ... existing code ...
+# Function to calculate another type of commission
 
-# Line 495
-comision = precio_promedio * 0.1
-pago = precio_promedio * 0.9
+def calculate_other_commission(sale_amount):
+    return sale_amount * COMMISSION_RATE_2
 
-Update commission from 20% to 10%
-# ... existing code below ...
+# Other original code remains unchanged...
