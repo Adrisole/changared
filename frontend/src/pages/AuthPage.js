@@ -53,7 +53,7 @@ export default function AuthPage() {
           <img 
             src="https://customer-assets.emergentagent.com/job_1ccdb137-8865-4cb4-b134-9dea2c01f7a6/artifacts/klhc20tm_ChangaRed_Logo_IG_320x320%20-%20Editado.png" 
             alt="ChangaRed Logo" 
-            className="h-20 mx-auto mb-4"
+            className="h-20 mx-auto mb-4 object-contain"
             data-testid="logo-image"
           />
           <CardTitle className="text-2xl font-heading font-bold">Bienvenido a ChangaRed</CardTitle>
