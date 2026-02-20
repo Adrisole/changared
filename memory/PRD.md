@@ -67,6 +67,8 @@ ChangaRed es una aplicación que conecta profesionales de servicios (electricist
 ## Known Issues Resolved
 1. ~~AI misclassifying "limpieza de alfombra" as "gasista"~~ - Fixed with improved prompt and fallback detection
 2. ~~Logo deformation on landing page~~ - Fixed with object-contain and white background
+3. ~~Anyone could register as admin~~ - SECURITY FIX: Removed admin option from public registration
+4. ~~Professionals couldn't select their trade~~ - Added service type and zone selection during registration
 
 ## 3rd Party Integrations
 - **OpenAI GPT-4o-mini**: Service classification (uses Emergent LLM Key)
