@@ -363,7 +363,7 @@ export default function ClienteDashboard() {
                           <DollarSign className="h-5 w-5 text-primary" />
                           <span className="text-2xl font-bold text-primary">${solicitud.precio_total.toFixed(2)}</span>
                         </div>
-                        {solicitud.estado_pago === 'sin_pagar' && (
+                        {solicitud.estado === 'confirmado' && solicitud.estado_pago === 'sin_pagar' && (
                           <Button
                             size="sm"
                             onClick={() => handlePagar(solicitud)}
@@ -373,8 +373,13 @@ export default function ClienteDashboard() {
                             Pagar Ahora
                           </Button>
                         )}
+                        {solicitud.estado === 'pendiente_confirmacion' && (
+                          <p className="text-xs text-amber-600 mt-2">
+                            ⏳ Esperando que el profesional confirme
+                          </p>
+                        )}
                         {solicitud.estado_pago === 'pagado' && (
-                          <Badge variant="secondary" className="w-full justify-center">
+                          <Badge variant="secondary" className="w-full justify-center mt-2">
                             ✓ Pagado
                           </Badge>
                         )}
