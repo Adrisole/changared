@@ -23,7 +23,7 @@ export default function LandingPage() {
             <img 
               src="https://customer-assets.emergentagent.com/job_1ccdb137-8865-4cb4-b134-9dea2c01f7a6/artifacts/klhc20tm_ChangaRed_Logo_IG_320x320%20-%20Editado.png" 
               alt="ChangaRed Logo" 
-              className="h-24 mb-6"
+              className="h-24 mb-6 object-contain bg-white/90 rounded-lg px-4 py-2"
               data-testid="hero-logo"
             />
             <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6 leading-tight" data-testid="hero-title">
