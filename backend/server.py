@@ -589,6 +589,10 @@ async def register(user_data: UserRegister):
     if existing:
         raise HTTPException(status_code=400, detail="Email ya registrado")
     
+    # Validar que profesionales tengan tipo_servicio
+    if user_data.rol == "profesional" and not user_data.tipo_servicio:
+        raise HTTPException(status_code=400, detail="Profesionales deben indicar su tipo de servicio")
+    
     hashed_pw = hash_password(user_data.password)
     user = User(
         email=user_data.email,
@@ -602,6 +606,36 @@ async def register(user_data: UserRegister):
     doc['created_at'] = doc['created_at'].isoformat()
     
     await db.users.insert_one(doc)
+    
+    # Si es profesional, crear también en la colección de profesionales
+    if user_data.rol == "profesional":
+        # Coordenadas default de Posadas (centro)
+        coordenadas_zona = {
+            "Posadas": (-27.3621, -55.8948),
+            "Garupá": (-27.4833, -55.8167),
+            "Candelaria": (-27.4667, -55.7500),
+            "Oberá": (-27.4833, -55.1333),
+            "Eldorado": (-26.4000, -54.6333)
+        }
+        lat, lon = coordenadas_zona.get(user_data.zona, (-27.3621, -55.8948))
+        
+        profesional = Profesional(
+            id=user.id,  # Mismo ID que el usuario
+            nombre=user_data.nombre,
+            telefono=user_data.telefono,
+            email=user_data.email,
+            tipo_servicio=user_data.tipo_servicio,
+            latitud=lat,
+            longitud=lon,
+            disponible=True,
+            tarifa_base=15000.0
+        )
+        prof_doc = profesional.model_dump()
+        prof_doc['created_at'] = prof_doc['created_at'].isoformat()
+        prof_doc['zona'] = user_data.zona
+        await db.profesionales.insert_one(prof_doc)
+        logging.info(f"Profesional {user_data.nombre} registrado como {user_data.tipo_servicio} en {user_data.zona}")
+    
     token = create_token(user.id)
     
     return TokenResponse(token=token, user=user)
