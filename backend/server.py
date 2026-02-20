@@ -184,6 +184,13 @@ async def enviar_notificacion_telegram(solicitud: dict):
         return
     
     try:
+        # Lista de profesionales disponibles
+        profesionales_text = ""
+        if 'profesionales_disponibles' in solicitud and solicitud['profesionales_disponibles']:
+            profesionales_text = "\n\n👷 **PROFESIONALES DISPONIBLES:**\n"
+            for i, prof in enumerate(solicitud['profesionales_disponibles'][:5], 1):
+                profesionales_text += f"{i}. {prof['nombre']} - {prof['distancia']} km\n"
+        
         # Formatear mensaje
         mensaje = f"""🔔 **NUEVA SOLICITUD ChangaRed**
 
@@ -194,17 +201,19 @@ async def enviar_notificacion_telegram(solicitud: dict):
 💬 **Descripción:**
 _{solicitud['mensaje_cliente']}_
 
-👷 **Profesional asignado:** {solicitud['profesional_nombre']}
-📍 **Distancia:** {solicitud['distancia_km']} km
 ⚠️ **Urgencia:** {solicitud['urgencia'].upper()}
-
 💰 **Precio total:** ${solicitud['precio_total']:,.0f}
 💵 **Tu comisión:** ${solicitud['comision_changared']:,.0f}
 💸 **Pago profesional:** ${solicitud['pago_profesional']:,.0f}
+{profesionales_text}
+📍 **Zona:** Lat: {solicitud['latitud_cliente']:.4f}, Lon: {solicitud['longitud_cliente']:.4f}
 
-🔗 **Ver en admin:** {os.environ.get('FRONTEND_URL')}/admin
+⚡ **ACCIÓN REQUERIDA:**
+Entrá al dashboard admin para asignar profesional:
+{os.environ.get('FRONTEND_URL')}/admin
 
 ⏰ {datetime.now(timezone.utc).strftime('%d/%m/%Y %H:%M')} hs
+━━━━━━━━━━━━━━━━━━━━━━━━
 """
         
         # Enviar mensaje
