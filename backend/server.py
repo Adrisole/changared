@@ -471,26 +471,30 @@ Devuelve SOLO JSON válido con este formato exacto:
         
         resultado = json.loads(response_text)
         
+        # IMPORTANTE: Guardar el servicio detectado por la IA antes de buscar profesional
+        servicio_detectado = resultado['servicio'].lower().replace(" ", "_")
+        categoria = resultado.get('categoria_trabajo', 'reparacion_simple')
+        
         # Encontrar profesional asignado
         profesional_asignado = None
         for prof in profesionales:
-            if resultado['profesional_id'] in prof['id']:
+            if resultado.get('profesional_id') and resultado['profesional_id'] in prof['id']:
                 profesional_asignado = prof
                 break
         
         if not profesional_asignado:
-            # Asignar el más cercano del tipo detectado
-            tipo = resultado['servicio'].lower().replace(" ", "_")
-            candidatos = [p for p in profesionales if tipo in p['tipo_servicio']]
+            # Buscar el más cercano del tipo detectado por la IA
+            candidatos = [p for p in profesionales if servicio_detectado in p['tipo_servicio']]
             if candidatos:
                 profesional_asignado = min(candidatos, key=lambda x: x['distancia'])
             else:
-                profesional_asignado = profesionales[0]
+                # No hay profesional del tipo requerido - usar el más cercano como fallback
+                profesional_asignado = min(profesionales, key=lambda x: x['distancia'])
+                logging.warning(f"No hay profesional de tipo '{servicio_detectado}', usando fallback")
         
-        # Recalcular precio con nuestra tabla
-        categoria = resultado.get('categoria_trabajo', 'reparacion_simple')
+        # Calcular precio basado en el SERVICIO DETECTADO (no el del profesional)
         precio_promedio, precio_min, precio_max = calcular_precio_servicio(
-            profesional_asignado['tipo_servicio'],
+            servicio_detectado,  # Usar el servicio detectado, no el del profesional
             categoria,
             urgencia == "urgente"
         )
@@ -505,7 +509,8 @@ Devuelve SOLO JSON válido con este formato exacto:
         resultado['comision_changared'] = comision
         resultado['pago_profesional'] = pago
         resultado['categoria_trabajo'] = categoria
-        resultado['servicio'] = profesional_asignado['tipo_servicio']
+        # CRÍTICO: Mantener el servicio detectado por la IA, NO sobrescribir
+        resultado['servicio'] = servicio_detectado
         
         return resultado
         
