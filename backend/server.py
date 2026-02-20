@@ -546,10 +546,20 @@ Devuelve SOLO JSON válido con este formato exacto:
         
     except Exception as e:
         logging.error(f"Error en IA: {str(e)}")
-        # Fallback: asignar el profesional más cercano
-        prof_cercano = min(profesionales, key=lambda x: x['distancia'])
+        # Fallback: detectar servicio por palabras clave
+        servicio_fallback = detectar_servicio_por_palabras(mensaje)
+        logging.info(f"Usando detección por palabras clave: {servicio_fallback}")
+        
+        # Buscar profesional del tipo detectado, si no hay usar el más cercano
+        candidatos = [p for p in profesionales if servicio_fallback in p['tipo_servicio']]
+        if candidatos:
+            prof_cercano = min(candidatos, key=lambda x: x['distancia'])
+        else:
+            prof_cercano = min(profesionales, key=lambda x: x['distancia'])
+        
+        # Usar el precio del servicio detectado, no del profesional
         precio_promedio, precio_min, precio_max = calcular_precio_servicio(
-            prof_cercano['tipo_servicio'],
+            servicio_fallback,
             'reparacion_simple',
             urgencia == "urgente"
         )
@@ -557,7 +567,7 @@ Devuelve SOLO JSON válido con este formato exacto:
         pago = precio_promedio * 0.8
         
         return {
-            "servicio": prof_cercano['tipo_servicio'],
+            "servicio": servicio_fallback,
             "categoria_trabajo": "reparacion_simple",
             "profesional_id": prof_cercano['id'],
             "profesional": prof_cercano,
@@ -566,8 +576,8 @@ Devuelve SOLO JSON válido con este formato exacto:
             "precio_total": precio_promedio,
             "comision_changared": comision,
             "pago_profesional": pago,
-            "mensaje_cliente": f"Hola {cliente_nombre}, hemos asignado un {prof_cercano['tipo_servicio'].replace('_', ' ')} para tu solicitud. Precio estimado: ${precio_min:,.0f} - ${precio_max:,.0f}. ¡Llegará pronto!",
-            "resumen_admin": f"Solicitud procesada automáticamente (fallback)"
+            "mensaje_cliente": f"Hola {cliente_nombre}, hemos recibido tu solicitud de {servicio_fallback.replace('_', ' ')}. Precio estimado: ${precio_min:,.0f} - ${precio_max:,.0f}. Te contactaremos pronto.",
+            "resumen_admin": f"Solicitud procesada con detección por palabras clave"
         }
 
 # Auth endpoints
