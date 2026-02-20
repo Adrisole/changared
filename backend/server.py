@@ -367,28 +367,44 @@ La urgencia del servicio es '{urgencia}' (normal o urgente).
 Dispones de los siguientes profesionales:
 {profesionales_info}
 
-SERVICIOS DISPONIBLES:
-- electricista: problemas eléctricos, cortes de luz, instalaciones eléctricas
-- plomero: cañerías, pérdidas de agua, destapaciones, grifería
-- gasista: calefones, gas, habilitaciones, instalaciones de gas
-- tecnico_lavarropas: reparación y service de lavarropas
-- tecnico_tv: reparación de televisores, pantallas
-- tecnico_heladeras: reparación de heladeras, freezers
-- tecnico_aire: service y reparación de aires acondicionados
-- limpieza: limpieza de casas, oficinas, post-obra
-- fletes: mudanzas, traslados, transporte de muebles/electrodomésticos
-- albanil: reparaciones de paredes, colocación de cerámicos, revoque
-- jardinero_poda: corte de pasto, poda de árboles, mantenimiento de jardines
-- pintor: pintura interior/exterior, impermeabilización
-- ninero_cuidador: cuidado de niños, adultos mayores, acompañamiento
-- tapiceria: tapizado de muebles, sillones, autos
-- herreria: rejas, portones, parrillas, trabajos en hierro
+SERVICIOS DISPONIBLES CON PALABRAS CLAVE:
+- electricista: luz, electricidad, corte de luz, cables, enchufe, térmica, tablero, instalación eléctrica, cortocircuito, aire acondicionado eléctrico
+- plomero: agua, caño, cañería, pérdida, fuga, destapación, inodoro, canilla, grifo, pileta, baño, ducha, calefón, termotanque
+- gasista: gas, calefón a gas, cocina, garrafa, habilitación de gas, calefacción, estufa
+- tecnico_lavarropas: lavarropas, lavaropa, lavadora, secarropas, centrifugado, tambor
+- tecnico_tv: televisor, TV, pantalla, smart tv, LED, plasma, monitor
+- tecnico_heladeras: heladera, heladera, freezer, refrigerador, no enfría, hielo
+- tecnico_aire: aire acondicionado, split, frío, calor, climatización, service de aire
+- limpieza: limpieza, limpiar, lavar, barrer, trapear, ordenar, desinfectar, alfombra, tapizado de alfombra, limpieza profunda, mucama, empleada doméstica
+- fletes: flete, mudanza, transporte, traslado, llevar muebles, camión, camioneta
+- albanil: pared, mampostería, revoque, yeso, durlock, cerámica, porcelanato, grieta, humedad, construcción
+- jardinero_poda: jardín, pasto, cortar pasto, podar, árboles, plantas, césped, desmalezar
+- pintor: pintar, pintura, latex, esmalte, pared pintada, cambiar color
+- ninero_cuidador: niñero, niñera, cuidado de niños, cuidar bebé, cuidador, adulto mayor, acompañante
+- tapiceria: tapizado, sillón, sofá, mueble tapizado, retapizar, cambiar tela
+- herreria: reja, portón, hierro, soldadura, parrilla, escalera de hierro
 
 CATEGORÍAS DE TRABAJO:
-- visita: solo revisión, diagnóstico, sin reparación confirmada
-- reparacion_simple: trabajos de 30-60 min (cambios simples, ajustes)
-- reparacion_media: trabajos de 1-2 horas (reparaciones complejas)
-- instalacion: instalaciones nuevas o completas
+- visita: solo revisión, diagnóstico, presupuesto, mirar, ver qué tiene
+- reparacion_simple: trabajos de 30-60 min, cambios simples, ajustes menores
+- reparacion_media: trabajos de 1-2 horas, reparaciones complejas
+- instalacion: instalaciones nuevas o completas, trabajos grandes
+
+EJEMPLOS CORRECTOS:
+- "limpieza de alfombra" → servicio: limpieza, categoría: reparacion_simple
+- "se me cortó la luz" → servicio: electricista, categoría: reparacion_simple
+- "pérdida de agua en el baño" → servicio: plomero, categoría: reparacion_simple
+- "necesito pintar mi casa" → servicio: pintor, categoría: reparacion_media
+- "mudanza de 2 ambientes" → servicio: fletes, categoría: reparacion_media
+- "cortar el pasto del jardín" → servicio: jardinero_poda, categoría: reparacion_simple
+
+INSTRUCCIONES CRÍTICAS:
+1. Lee CUIDADOSAMENTE el mensaje del cliente
+2. Identifica las PALABRAS CLAVE del mensaje
+3. Busca el servicio que MEJOR coincida con esas palabras
+4. Si dice "limpieza" o "alfombra" → ES LIMPIEZA, NO gasista ni otro
+5. Si dice "mudanza" o "flete" → ES FLETES, NO otra cosa
+6. Determina la categoría según la complejidad descrita
 
 RANGOS DE PRECIOS POR CATEGORÍA (en ARS):
 Electricista: Visita 8k-15k | Simple 15k-28k | Media 25k-60k | Instalación 40k-180k
@@ -398,15 +414,25 @@ Técnico Lavarropas: Visita 12k-25k | Simple 20k-55k | Media 40k-160k
 Técnico TV: Visita 8k-25k | Simple 15k-50k | Media 50k-180k
 Técnico Heladeras: Visita 15k-28k | Simple 20k-65k | Media 30k-120k
 Técnico Aire: Visita 15k-25k | Simple 25k-70k | Media 45k-130k | Instalación 70k-180k
+Limpieza: Visita 3.5k-5.5k/h | Simple 14k-22k | Media 25k-45k | Instalación 35k-70k
+Fletes: Visita 15k-25k | Simple 40k-80k | Media 70k-130k | Instalación 110k-200k
+Albañil: Visita 14k-20k | Simple 25k-35k | Media 30k-70k | Instalación 120k-280k
+Jardinero: Visita 10k-18k | Simple 18k-35k | Media 35k-65k | Instalación 50k-120k
+Pintor: Visita 24k-31k | Simple 35k-75k | Media 120k-280k
+Niñero: Visita 3.5k-6k/h | Simple 15k-28k | Media 28k-50k | Instalación 35k-60k
+Tapicería: Visita 10k-25k | Simple 15k-70k | Media 60k-180k
+Herrería: Visita 20k-45k | Simple 25k-55k | Media 80k-180k | Instalación 150k-350k
 
 Tareas:
-1. Determinar el tipo de servicio requerido (uno de los listados arriba).
-2. Determinar la categoría de trabajo según la descripción.
-3. Seleccionar el profesional más cercano disponible del tipo requerido.
-4. Calcular precio según categoría y aplicar +30% si es urgente.
-5. Calcular comisión de ChangaRed (20% del precio final).
-6. Calcular pago al profesional (80% del precio final).
-7. Generar mensaje profesional para el cliente incluyendo tipo de trabajo y rango de precio.
+1. LEER el mensaje del cliente CON ATENCIÓN
+2. IDENTIFICAR palabras clave específicas
+3. DETERMINAR el servicio correcto (uno de los listados arriba)
+4. DETERMINAR la categoría de trabajo según la descripción
+5. Seleccionar el profesional más cercano disponible del tipo requerido
+6. Calcular precio según categoría y aplicar +30% si es urgente
+7. Calcular comisión de ChangaRed (20% del precio final)
+8. Calcular pago al profesional (80% del precio final)
+9. Generar mensaje profesional para el cliente incluyendo tipo de trabajo y rango de precio
 
 Devuelve SOLO JSON válido con este formato exacto:
 {{
