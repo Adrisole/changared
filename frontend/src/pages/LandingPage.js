@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { Zap, Droplets, Flame, MapPin, Clock, Shield, CheckCircle, Wind, Tv, Refrigerator, WashingMachine } from 'lucide-react';
+import { Zap, Droplets, Flame, MapPin, Clock, Shield, CheckCircle, Wind, Tv, Refrigerator, WashingMachine, Sparkles, Truck, Hammer, TreePine, Paintbrush, Baby, Armchair, Wrench } from 'lucide-react';
 
 export default function LandingPage() {
   return (
