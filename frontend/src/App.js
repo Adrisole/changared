@@ -6,6 +6,7 @@ import { Toaster } from "./components/ui/sonner";
 import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import ClienteDashboard from "./pages/ClienteDashboard";
+import ProfesionalDashboard from "./pages/ProfesionalDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
