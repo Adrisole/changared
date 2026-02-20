@@ -95,7 +95,13 @@ export default function ClienteDashboard() {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('¡Solicitud creada! Profesional asignado.');
-      setFormData({ mensaje_cliente: '', latitud: -27.365, longitud: -55.896, urgencia: 'normal' });
+      setFormData({ 
+        mensaje_cliente: '', 
+        latitud: zonas.centro.lat, 
+        longitud: zonas.centro.lon, 
+        urgencia: 'normal',
+        zona: 'centro'
+      });
       setShowForm(false);
       fetchSolicitudes();
     } catch (error) {
