@@ -214,6 +214,54 @@ PRECIOS = {
         "reparacion_simple": (25000, 70000),
         "reparacion_media": (45000, 130000),
         "instalacion": (70000, 180000)
+    },
+    "limpieza": {
+        "visita": (3500, 5500),
+        "reparacion_simple": (14000, 22000),
+        "reparacion_media": (25000, 45000),
+        "instalacion": (35000, 70000)
+    },
+    "fletes": {
+        "visita": (15000, 25000),
+        "reparacion_simple": (40000, 80000),
+        "reparacion_media": (70000, 130000),
+        "instalacion": (110000, 200000)
+    },
+    "albanil": {
+        "visita": (14000, 20000),
+        "reparacion_simple": (25000, 35000),
+        "reparacion_media": (30000, 70000),
+        "instalacion": (120000, 280000)
+    },
+    "jardinero_poda": {
+        "visita": (10000, 18000),
+        "reparacion_simple": (18000, 35000),
+        "reparacion_media": (35000, 65000),
+        "instalacion": (50000, 120000)
+    },
+    "pintor": {
+        "visita": (24000, 31000),
+        "reparacion_simple": (35000, 75000),
+        "reparacion_media": (120000, 280000),
+        "instalacion": (0, 0)
+    },
+    "ninero_cuidador": {
+        "visita": (3500, 6000),
+        "reparacion_simple": (15000, 28000),
+        "reparacion_media": (28000, 50000),
+        "instalacion": (35000, 60000)
+    },
+    "tapiceria": {
+        "visita": (10000, 25000),
+        "reparacion_simple": (15000, 70000),
+        "reparacion_media": (60000, 180000),
+        "instalacion": (0, 0)
+    },
+    "herreria": {
+        "visita": (20000, 45000),
+        "reparacion_simple": (25000, 55000),
+        "reparacion_media": (80000, 180000),
+        "instalacion": (150000, 350000)
     }
 }
 
