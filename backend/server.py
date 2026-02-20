@@ -15,4 +15,5 @@ pago = precio_promedio * 0.9
 comision = precio_promedio * 0.1
 pago = precio_promedio * 0.9
 
+Update commission from 20% to 10%
 # ... existing code below ...
