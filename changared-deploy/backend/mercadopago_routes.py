@@ -72,7 +72,7 @@ async def create_payment_preference(request: CreatePaymentRequest):
             },
             "auto_return": "approved",
             "external_reference": request.solicitud_id,
-            "notification_url": f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://gig-router.preview.emergentagent.com')}/api/payments/webhook",
+            "notification_url": f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://changared-services.preview.emergentagent.com')}/api/payments/webhook",
             "statement_descriptor": "CHANGARED",
             "metadata": {
                 "solicitud_id": request.solicitud_id,

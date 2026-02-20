@@ -150,7 +150,7 @@ En Railway:
 
 ### 1. Prueba Local (Ya funcionando)
 ```
-https://gig-router.preview.emergentagent.com
+https://changared-services.preview.emergentagent.com
 ```
 
 ### 2. En tu Deployment
