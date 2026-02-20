@@ -312,6 +312,14 @@ SERVICIOS DISPONIBLES:
 - tecnico_tv: reparación de televisores, pantallas
 - tecnico_heladeras: reparación de heladeras, freezers
 - tecnico_aire: service y reparación de aires acondicionados
+- limpieza: limpieza de casas, oficinas, post-obra
+- fletes: mudanzas, traslados, transporte de muebles/electrodomésticos
+- albanil: reparaciones de paredes, colocación de cerámicos, revoque
+- jardinero_poda: corte de pasto, poda de árboles, mantenimiento de jardines
+- pintor: pintura interior/exterior, impermeabilización
+- ninero_cuidador: cuidado de niños, adultos mayores, acompañamiento
+- tapiceria: tapizado de muebles, sillones, autos
+- herreria: rejas, portones, parrillas, trabajos en hierro
 
 CATEGORÍAS DE TRABAJO:
 - visita: solo revisión, diagnóstico, sin reparación confirmada
