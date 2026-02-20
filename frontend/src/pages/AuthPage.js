@@ -182,10 +182,45 @@ export default function AuthPage() {
                     data-testid="register-rol-select"
                   >
                     <option value="cliente">Cliente</option>
-                    <option value="profesional">Profesional</option>
-                    <option value="admin">Administrador</option>
+                    <option value="profesional">Profesional / Changarin</option>
                   </select>
                 </div>
+                
+                {registerData.rol === 'profesional' && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="register-servicio">¿Qué servicio ofrecés?</Label>
+                      <select
+                        id="register-servicio"
+                        value={registerData.tipo_servicio}
+                        onChange={(e) => setRegisterData({ ...registerData, tipo_servicio: e.target.value })}
+                        className="w-full h-12 rounded-lg border border-slate-200 px-3 bg-slate-50"
+                        data-testid="register-servicio-select"
+                        required
+                      >
+                        {TIPOS_SERVICIO.map(tipo => (
+                          <option key={tipo.value} value={tipo.value}>{tipo.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="register-zona">Zona de trabajo</Label>
+                      <select
+                        id="register-zona"
+                        value={registerData.zona}
+                        onChange={(e) => setRegisterData({ ...registerData, zona: e.target.value })}
+                        className="w-full h-12 rounded-lg border border-slate-200 px-3 bg-slate-50"
+                        data-testid="register-zona-select"
+                      >
+                        <option value="Posadas">Posadas</option>
+                        <option value="Garupá">Garupá</option>
+                        <option value="Candelaria">Candelaria</option>
+                        <option value="Oberá">Oberá</option>
+                        <option value="Eldorado">Eldorado</option>
+                      </select>
+                    </div>
+                  </>
+                )}
                 <Button 
                   type="submit" 
                   className="w-full" 
