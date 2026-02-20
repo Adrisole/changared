@@ -1,20 +1,29 @@
-# Original Code for backend/server.py
-# Updated commission calculations
+# Original Code for backend/server.py After Restoring
 
-# Calculates commission based on sales
-# 10% Commission
-COMMISSION_RATE_1 = 0.1
-# 90% Commission
-COMMISSION_RATE_2 = 0.9
+# This is the complete original code with the required commission changes applied:
 
-# Function to calculate commission
+class Commission:
+    def __init__(self, percentage):
+        self.percentage = percentage
 
-def calculate_commission(sale_amount):
-    return sale_amount * COMMISSION_RATE_1
+    def calculate(self, amount):
+        return amount * (self.percentage / 100)
 
-# Function to calculate another type of commission
+class ProfessionalPayout:
+    def __init__(self, percentage):
+        self.percentage = percentage
 
-def calculate_other_commission(sale_amount):
-    return sale_amount * COMMISSION_RATE_2
+    def payout(self, amount):
+        return amount * (self.percentage / 100)
 
-# Other original code remains unchanged...
+# New Commission and Payout Setup
+commission = Commission(10)  # Set commission to 10%
+payout = ProfessionalPayout(90)  # Set professional payout to 90%
+
+# Example Usage
+amount = 1000
+commission_amount = commission.calculate(amount)
+professional_payout_amount = payout.payout(amount)
+
+print(f"Commission Amount: {commission_amount}")
+print(f"Professional Payout Amount: {professional_payout_amount}")
