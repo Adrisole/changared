@@ -51,84 +51,157 @@ export default function LandingPage() {
       {/* Servicios Section */}
       <div className="py-20 bg-slate-50" data-testid="servicios-section">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-heading font-bold text-center mb-4">Servicios Disponibles</h2>
-          <p className="text-center text-slate-600 mb-12 text-lg">Profesionales verificados para emergencias y trabajos programados</p>
+          <h2 className="text-4xl font-heading font-bold text-center mb-4">15 Servicios Disponibles</h2>
+          <p className="text-center text-slate-600 mb-12 text-lg">Profesionales verificados con precios transparentes</p>
           
-          <div className="grid md:grid-cols-4 gap-6">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary" data-testid="servicio-electricista-card">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Zap className="h-7 w-7 text-primary group-hover:text-white" />
+          <div className="grid md:grid-cols-5 gap-4">
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Zap className="h-6 w-6 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Electricista</h3>
-                <p className="text-sm text-slate-600 mb-3">Instalaciones, reparaciones y emergencias eléctricas.</p>
-                <p className="text-xs text-primary font-semibold">Desde $8,000</p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary" data-testid="servicio-plomero-card">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Droplets className="h-7 w-7 text-primary group-hover:text-white" />
-                </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Plomero</h3>
-                <p className="text-sm text-slate-600 mb-3">Reparación de cañerías, fugas y sistemas sanitarios.</p>
-                <p className="text-xs text-primary font-semibold">Desde $15,000</p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary" data-testid="servicio-gasista-card">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Flame className="h-7 w-7 text-primary group-hover:text-white" />
-                </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Gasista</h3>
-                <p className="text-sm text-slate-600 mb-3">Instalaciones y reparaciones de gas matriculado.</p>
-                <p className="text-xs text-primary font-semibold">Desde $20,000</p>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Electricista</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $8k</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Wind className="h-7 w-7 text-primary group-hover:text-white" />
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Droplets className="h-6 w-6 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Técnico Aire</h3>
-                <p className="text-sm text-slate-600 mb-3">Service y reparación de aires acondicionados.</p>
-                <p className="text-xs text-primary font-semibold">Desde $15,000</p>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Plomero</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $15k</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <WashingMachine className="h-7 w-7 text-primary group-hover:text-white" />
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Flame className="h-6 w-6 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Técnico Lavarropas</h3>
-                <p className="text-sm text-slate-600 mb-3">Reparación y service de lavarropas.</p>
-                <p className="text-xs text-primary font-semibold">Desde $12,000</p>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Gasista</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $20k</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Refrigerator className="h-7 w-7 text-primary group-hover:text-white" />
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Wind className="h-6 w-6 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Técnico Heladeras</h3>
-                <p className="text-sm text-slate-600 mb-3">Reparación de heladeras y freezers.</p>
-                <p className="text-xs text-primary font-semibold">Desde $15,000</p>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Téc. Aire</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $15k</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
-              <CardContent className="p-6">
-                <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <Tv className="h-7 w-7 text-primary group-hover:text-white" />
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Sparkles className="h-6 w-6 text-primary group-hover:text-white" />
                 </div>
-                <h3 className="text-xl font-heading font-bold mb-2">Técnico TV</h3>
-                <p className="text-sm text-slate-600 mb-3">Reparación de televisores y pantallas.</p>
-                <p className="text-xs text-primary font-semibold">Desde $8,000</p>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Limpieza</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $3.5k/h</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Truck className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Fletes</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $15k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Hammer className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Albañil</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $14k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <TreePine className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Jardinero</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $10k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Paintbrush className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Pintor</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $24k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Baby className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Cuidador</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $3.5k/h</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <WashingMachine className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Téc. Lav.</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $12k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Refrigerator className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Téc. Heladera</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $15k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Tv className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Téc. TV</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $8k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Armchair className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Tapicería</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $10k</p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary group-hover:scale-110 transition-all mx-auto">
+                  <Wrench className="h-6 w-6 text-primary group-hover:text-white" />
+                </div>
+                <h3 className="text-base font-heading font-bold mb-1 text-center">Herrería</h3>
+                <p className="text-xs text-slate-600 text-center">Desde $20k</p>
               </CardContent>
             </Card>
           </div>
