@@ -17,6 +17,7 @@ export default function AdminDashboard() {
   const [solicitudes, setSolicitudes] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingProf, setEditingProf] = useState(null);
+  const [asignandoSolicitud, setAsignandoSolicitud] = useState(null);
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
