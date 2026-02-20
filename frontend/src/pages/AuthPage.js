@@ -8,6 +8,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 
+const TIPOS_SERVICIO = [
+  { value: 'electricista', label: 'Electricista' },
+  { value: 'plomero', label: 'Plomero' },
+  { value: 'gasista', label: 'Gasista' },
+  { value: 'tecnico_lavarropas', label: 'Técnico en Lavarropas' },
+  { value: 'tecnico_tv', label: 'Técnico en TV' },
+  { value: 'tecnico_heladeras', label: 'Técnico en Heladeras' },
+  { value: 'tecnico_aire', label: 'Técnico en Aire Acondicionado' },
+  { value: 'limpieza', label: 'Limpieza' },
+  { value: 'fletes', label: 'Fletes y Mudanzas' },
+  { value: 'albanil', label: 'Albañil' },
+  { value: 'jardinero_poda', label: 'Jardinero / Poda' },
+  { value: 'pintor', label: 'Pintor' },
+  { value: 'ninero_cuidador', label: 'Niñero / Cuidador' },
+  { value: 'tapiceria', label: 'Tapicería' },
+  { value: 'herreria', label: 'Herrería' }
+];
+
 export default function AuthPage() {
   const { login, register } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -17,7 +35,9 @@ export default function AuthPage() {
     password: '',
     nombre: '',
     telefono: '',
-    rol: 'cliente'
+    rol: 'cliente',
+    tipo_servicio: 'electricista',
+    zona: 'Posadas'
   });
 
   const handleLogin = async (e) => {
