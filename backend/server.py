@@ -65,7 +65,12 @@ class ProfesionalCreate(BaseModel):
     nombre: str
     telefono: str
     email: EmailStr
-    tipo_servicio: Literal["electricista", "plomero", "gasista", "tecnico_lavarropas", "tecnico_tv", "tecnico_heladeras", "tecnico_aire"]
+    tipo_servicio: Literal[
+        "electricista", "plomero", "gasista", 
+        "tecnico_lavarropas", "tecnico_tv", "tecnico_heladeras", "tecnico_aire",
+        "limpieza", "fletes", "albanil", "jardinero_poda", "pintor", 
+        "ninero_cuidador", "tapiceria", "herreria"
+    ]
     latitud: float
     longitud: float
     disponible: bool = True
