@@ -133,6 +133,21 @@ export default function AdminDashboard() {
     });
   };
 
+  const handleAsignarProfesional = async (solicitudId, profesionalId) => {
+    try {
+      await axios.post(
+        `${API}/admin/solicitudes/${solicitudId}/asignar-profesional?profesional_id=${profesionalId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success('Profesional asignado correctamente');
+      setAsignandoSolicitud(null);
+      fetchData();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Error al asignar');
+    }
+  };
+
   const getServiceIcon = (tipo) => {
     const icons = {
       electricista: <Zap className="h-5 w-5" />,
