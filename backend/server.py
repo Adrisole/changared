@@ -650,6 +650,12 @@ async def create_solicitud(solicitud_data: SolicitudCreate, current_user: User =
         }
     )
     
+    # Enviar notificación por Telegram al admin
+    try:
+        await enviar_notificacion_telegram(doc)
+    except Exception as e:
+        logging.error(f"Error enviando notificación: {str(e)}")
+    
     return solicitud
 
 @api_router.get("/solicitudes", response_model=List[Solicitud])
