@@ -39,6 +39,10 @@ const DashboardRouter = () => {
   if (user.rol === "admin") {
     return <AdminDashboard />;
   }
+  
+  if (user.rol === "profesional") {
+    return <ProfesionalDashboard />;
+  }
 
   return <ClienteDashboard />;
 };
