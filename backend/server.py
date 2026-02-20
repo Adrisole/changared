@@ -43,7 +43,9 @@ class UserRegister(BaseModel):
     password: str
     nombre: str
     telefono: str
-    rol: Literal["cliente", "profesional", "admin"] = "cliente"
+    rol: Literal["cliente", "profesional"] = "cliente"  # Admin removido por seguridad
+    tipo_servicio: Optional[str] = None  # Requerido si es profesional
+    zona: Optional[str] = "Posadas"
 
 class UserLogin(BaseModel):
     email: EmailStr
