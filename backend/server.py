@@ -114,12 +114,14 @@ class Solicitud(BaseModel):
     comision_changared: float
     pago_profesional: float
     urgencia: str
-    estado: str = "pendiente"
+    estado: str = "pendiente_confirmacion"  # pendiente_confirmacion, confirmado, rechazado, en_proceso, completado, cancelado
     estado_pago: str = "sin_pagar"
     mercadopago_preference_id: Optional[str] = None
     mercadopago_payment_id: Optional[str] = None
     mensaje_respuesta: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    confirmado_at: Optional[datetime] = None
+    rechazado_at: Optional[datetime] = None
 
 class AdminMetrics(BaseModel):
     total_solicitudes: int
