@@ -209,7 +209,7 @@ Zona: {solicitud.get('zona', '')}
 Cliente: {solicitud.get('cliente_nombre', '')}
 Telefono: {solicitud.get('cliente_telefono', 'Ver en app')}
 
-Tu pago: ${tarifa_min * 0.90:,.0f} - ${tarifa_max * 0.90:,.0f}
+Tu pago: ${tarifa_min * 0.85:,.0f} - ${tarifa_max * 0.85:,.0f}
 
 Saludos,
 Equipo ChangaRed
@@ -459,10 +459,10 @@ async def crear_solicitud(solicitud_data: SolicitudCreate, current_user: dict = 
     sol_doc["created_at"] = sol_doc["created_at"].isoformat()
     await db.solicitudes.insert_one(sol_doc)
 
-    pago_prof_min = round(tarifa_min * 0.90)
-    pago_prof_max = round(tarifa_max * 0.90)
-    comision_min  = round(tarifa_min * 0.10)
-    comision_max  = round(tarifa_max * 0.10)
+    pago_prof_min = round(tarifa_min * 0.85)
+    pago_prof_max = round(tarifa_max * 0.85)
+    comision_min  = round(tarifa_min * 0.15)
+    comision_max  = round(tarifa_max * 0.15)
 
     logger.info(
         f"Solicitud {solicitud.id} | {servicio_detectado} | urgente={solicitud_data.urgente} | "
