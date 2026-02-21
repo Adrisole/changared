@@ -17,7 +17,7 @@ import uuid
 from datetime import datetime, timezone, timedelta
 from passlib.context import CryptContext
 import jwt
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from openai import AsyncOpenAI
 
 load_dotenv()
 
@@ -295,10 +295,13 @@ def detectar_servicio_por_palabras(mensaje: str) -> str:
 
 async def clasificar_solicitud_ia(mensaje: str, zona: str) -> dict:
     try:
-        chat = LlmChat(
-            api_key=EMERGENT_API_KEY,
-            session_id=str(uuid.uuid4()),
-            system_message="""Eres un clasificador de servicios para ChangaRed, plataforma de servicios en Misiones, Argentina.
+        client_ai = AsyncOpenAI(api_key=EMERGENT_API_KEY)
+        response = await client_ai.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": """Eres un clasificador de servicios para ChangaRed, plataforma de servicios en Misiones, Argentina.
 
 Dado un mensaje de cliente, devuelve SOLO un JSON válido con este formato exacto:
 {
@@ -311,17 +314,19 @@ Dado un mensaje de cliente, devuelve SOLO un JSON válido con este formato exact
 Servicios válidos: electricista, plomero, gasista, pintor, carpintero, limpieza, jardinero, cerrajero, técnico aire acondicionado, técnico lavarropas, técnico heladeras, técnico electrodomésticos, albañil, mudanza, técnico general
 Tarifas en pesos argentinos para Misiones (rango típico 15000-50000).
 NO incluyas texto adicional, SOLO el JSON."""
+                },
+                {
+                    "role": "user",
+                    "content": f"Clasificar: {mensaje} (zona: {zona})"
+                }
+            ]
         )
-        user_msg = UserMessage(content=f"Clasificar: {mensaje} (zona: {zona})")
-        response = await chat.send_message(user_msg)
-
-        text = response.strip()
+        text = response.choices[0].message.content.strip()
         if "```" in text:
             text = text.split("```")[1]
             if text.startswith("json"):
                 text = text[4:]
         text = text.strip()
-
         return json.loads(text)
     except Exception as e:
         logger.error(f"Error IA: {e}")
