@@ -365,26 +365,20 @@ async def crear_solicitud(solicitud_data: SolicitudCreate, current_user: dict = 
         f"comision: ${comision_min:,.0f}-${comision_max:,.0f}"
     )
 
-    # 6. Notificar al admin por Telegram con todos los datos para reenviar por WhatsApp
-    urgente_txt = " URGENTE" if solicitud_data.urgente else ""
+    # 6. Notificar al admin por Telegram
+    urgente_txt = " - URGENTE" if solicitud_data.urgente else ""
     lineas = [
         f"NUEVA SOLICITUD{urgente_txt} - ChangaRed",
-        "---",
         f"Servicio: {servicio_detectado.upper()}",
         f"Problema: {solicitud_data.mensaje}",
         f"Zona: {solicitud_data.zona}",
-        f"Urgente: {'SI (+30%)' if solicitud_data.urgente else 'No'}",
-        "---",
+        "",
         f"Cliente: {current_user['nombre']}",
-        f"Telefono: {current_user.get('telefono', 'N/A')}",
-        f"Email: {current_user.get('email', 'N/A')}",
-        "---",
-        f"Precio para el cliente: ${tarifa_min:,.0f} - ${tarifa_max:,.0f}",
-        f"Changarin recibe (90%): ${pago_prof_min:,.0f} - ${pago_prof_max:,.0f}",
-        f"Tu comision (10%): ${comision_min:,.0f} - ${comision_max:,.0f}",
-        "---",
-        f"ID solicitud: {solicitud.id}",
-        f"Acepta en: /api/admin/solicitudes/{solicitud.id}/accion"
+        f"Tel: {current_user.get('telefono', 'N/A')}",
+        "",
+        f"Precio acordado: ${pago_prof_min:,.0f} - ${pago_prof_max:,.0f}",
+        "",
+        f"ID: {solicitud.id}"
     ]
     await notificar_telegram("\n".join(lineas))
 
